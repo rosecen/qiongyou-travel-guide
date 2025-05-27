@@ -4,8 +4,8 @@ export async function POST(request: NextRequest) {
   try {
     const { city, budget, days, style } = await request.json()
 
-    // 从环境变量获取API密钥
-    const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
+    // 临时硬编码API密钥，确保部署正常工作
+    const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "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"
     
     if (!OPENROUTER_API_KEY) {
       console.error('OpenRouter API key not found')
