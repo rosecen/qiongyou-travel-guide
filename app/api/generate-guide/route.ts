@@ -1,23 +1,32 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-const OPENROUTER_API_KEY = "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"
-
-const styleDescriptions = {
-  cultural: "文艺青年风格，重点推荐咖啡馆、书店、艺术馆、文创园区、独立书店、画廊等文艺场所",
-  foodie: "美食探索风格，重点推荐当地小吃、特色餐厅、夜市美食、街头小食、传统菜系",
-  historical: "历史文化风格，重点推荐博物馆、古迹、传统建筑、文化遗产、历史街区",
-  nature: "自然风光风格，重点推荐公园、山水、户外活动、风景名胜、徒步路线",
-  nightlife: "夜生活风格，重点推荐酒吧、夜市、娱乐场所、夜景观赏点、夜间活动",
-  shopping: "购物血拼风格，重点推荐商场、市集、特产店、潮流店铺、购物街区",
-  relaxed: "极简休闲风格，重点推荐放松场所、慢节奏活动、简单行程、度假式体验",
-}
-
 export async function POST(request: NextRequest) {
   try {
     const { city, budget, days, style } = await request.json()
 
+    // 从环境变量获取API密钥
+    const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY
+    
+    if (!OPENROUTER_API_KEY) {
+      console.error('OpenRouter API key not found')
+      return NextResponse.json(
+        { error: 'API配置错误' },
+        { status: 500 }
+      )
+    }
+
     if (!city || !budget || !days || !style) {
       return NextResponse.json({ error: "请填写完整的旅行信息" }, { status: 400 })
+    }
+
+    const styleDescriptions = {
+      cultural: "文艺青年风格，重点推荐咖啡馆、书店、艺术馆、文创园区、独立书店、画廊等文艺场所",
+      foodie: "美食探索风格，重点推荐当地小吃、特色餐厅、夜市美食、街头小食、传统菜系",
+      historical: "历史文化风格，重点推荐博物馆、古迹、传统建筑、文化遗产、历史街区",
+      nature: "自然风光风格，重点推荐公园、山水、户外活动、风景名胜、徒步路线",
+      nightlife: "夜生活风格，重点推荐酒吧、夜市、娱乐场所、夜景观赏点、夜间活动",
+      shopping: "购物血拼风格，重点推荐商场、市集、特产店、潮流店铺、购物街区",
+      relaxed: "极简休闲风格，重点推荐放松场所、慢节奏活动、简单行程、度假式体验",
     }
 
     const styleDescription = styleDescriptions[style as keyof typeof styleDescriptions] || ""
