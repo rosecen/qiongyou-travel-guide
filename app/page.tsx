@@ -33,35 +33,15 @@ const popularCities = [
 ]
 
 const travelStyles = [
-  { value: "cultural", label: "文艺青年", description: "咖啡馆、书店、艺术馆、文创园区", icon: "🎨" },
-  { value: "foodie", label: "美食探索", description: "当地小吃、特色餐厅、夜市美食", icon: "🍜" },
-  { value: "historical", label: "历史文化", description: "博物馆、古迹、传统建筑、文化遗产", icon: "🏛️" },
-  { value: "nature", label: "自然风光", description: "公园、山水、户外活动、风景名胜", icon: "🌿" },
-  { value: "nightlife", label: "夜生活", description: "酒吧、夜市、娱乐场所、夜景", icon: "🌃" },
-  { value: "shopping", label: "购物血拼", description: "商场、市集、特产、潮流店铺", icon: "🛍️" },
-  { value: "relaxed", label: "极简休闲", description: "放松、慢节奏、简单行程、度假风", icon: "☕" },
+  { value: "cultural", label: "文化历史", description: "探索古迹，体验传统文化", icon: "🏛️" },
+  { value: "nature", label: "自然风光", description: "亲近自然，享受户外时光", icon: "🏔️" },
+  { value: "foodie", label: "美食探索", description: "品尝地道美食，寻找小众餐厅", icon: "🍜" },
+  { value: "photography", label: "摄影打卡", description: "寻找美景，记录旅行回忆", icon: "📸" },
+  { value: "adventure", label: "冒险体验", description: "挑战自我，体验刺激活动", icon: "🎒" },
+  { value: "relaxed", label: "休闲度假", description: "放松身心，慢节奏旅行", icon: "🌴" },
 ]
 
-const featuredDestinations = [
-  {
-    name: "古都京城",
-    image: "🏛️",
-    description: "探索千年历史文化，体验传统与现代的完美融合",
-    avgBudget: "¥800/天"
-  },
-  {
-    name: "魔都上海",
-    image: "🌃",
-    description: "感受国际大都市的繁华，享受多元文化碰撞",
-    avgBudget: "¥600/天"
-  },
-  {
-    name: "天府成都",
-    image: "🌶️",
-    description: "品味地道川菜文化，体验悠闲慢生活节奏",
-    avgBudget: "¥400/天"
-  }
-]
+const dayOptions = [1, 2, 3, 4, 5, 6, 7, 10, 14]
 
 interface TravelGuide {
   city: string
@@ -74,7 +54,7 @@ interface TravelGuide {
 
 export default function HomePage() {
   const [selectedCity, setSelectedCity] = useState("")
-  const [budget, setBudget] = useState("")
+  const [budget, setBudget] = useState(1000)
   const [days, setDays] = useState("")
   const [travelStyle, setTravelStyle] = useState("")
   const [isGenerating, setIsGenerating] = useState(false)
@@ -93,7 +73,7 @@ export default function HomePage() {
       return
     }
 
-    if (Number.parseInt(budget) < 100) {
+    if (budget < 100) {
       setError("预算至少需要100元")
       return
     }
@@ -118,7 +98,7 @@ export default function HomePage() {
         },
         body: JSON.stringify({
           city: selectedCity,
-          budget: budget,
+          budget: budget.toString(),
           days: days,
           style: travelStyle,
         }),
@@ -136,7 +116,7 @@ export default function HomePage() {
       setTimeout(() => {
         const newGuide: TravelGuide = {
           city: selectedCity,
-          budget: budget,
+          budget: budget.toString(),
           days: days,
           style: travelStyle,
           data: data.guide,
@@ -166,172 +146,182 @@ export default function HomePage() {
   const selectedStyleInfo = travelStyles.find((style) => style.value === travelStyle)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-sky-50 to-cyan-50 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12 relative z-10">
+      <main className="container mx-auto px-6 py-8 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
-          <div className="text-center mb-12">
-            <h2 className="text-5xl font-bold text-gray-900 mb-4 font-serif tracking-wide">
-              穷游去哪玩儿
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light italic tracking-wider">
-              用最低预算，看最美世界
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-500 to-red-500 bg-clip-text text-transparent tracking-tight">穷游去哪玩</h1>
+              <div className="text-3xl">✈️</div>
+            </div>
+            <p className="text-lg text-gray-600 font-light">
+              预算低但体验丰富的年轻旅行者专属攻略生成器
             </p>
           </div>
 
           {/* Planning Form */}
-          <Card className="shadow-2xl border-0 bg-white/90 backdrop-blur-sm rounded-2xl">
-            <CardHeader className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-t-2xl">
-              <CardTitle className="flex items-center space-x-2">
-                <Sparkles className="h-6 w-6" />
-                <span>开始规划你的穷游之旅</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-8 space-y-6">
-              {/* 进度条 */}
-              {isGenerating && (
-                <div className="mb-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-blue-700">正在生成您的专属攻略...</span>
-                    <span className="text-sm text-blue-600">{Math.round(progress)}%</span>
-                  </div>
-                  <div className="w-full bg-blue-100 rounded-full h-3 overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-300 ease-out relative"
-                      style={{ width: `${progress}%` }}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-center mt-3 text-blue-600">
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    <span className="text-sm">AI正在为您量身定制旅行方案...</span>
+          <div className="space-y-6">
+            {/* 进度条 */}
+            {isGenerating && (
+              <div className="bg-white rounded-2xl p-6 shadow-lg">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-base font-medium text-gray-700">正在生成您的专属攻略...</span>
+                  <span className="text-base text-orange-600 font-semibold">{Math.round(progress)}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-orange-400 to-amber-400 rounded-full transition-all duration-300 ease-out relative"
+                    style={{ width: `${progress}%` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
                   </div>
                 </div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* 城市选择 */}
-                <div className="space-y-2">
-                  <Label htmlFor="city" className="text-gray-700 font-medium flex items-center">
-                    <MapPin className="h-4 w-4 mr-2 text-blue-500" />
-                    目的地城市
-                  </Label>
-                  <Select value={selectedCity} onValueChange={setSelectedCity}>
-                    <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl">
-                      <SelectValue placeholder="选择你想去的城市" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-xl">
-                      {popularCities.map((city) => (
-                        <SelectItem key={city} value={city}>
-                          {city}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* 预算输入 */}
-                <div className="space-y-2">
-                  <Label htmlFor="budget" className="text-gray-700 font-medium flex items-center">
-                    <DollarSign className="h-4 w-4 mr-2 text-blue-500" />
-                    预算
-                  </Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">¥</span>
-                    <Input
-                      id="budget"
-                      type="number"
-                      placeholder="1000"
-                      value={budget}
-                      onChange={(e) => setBudget(e.target.value)}
-                      className="pl-8 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
-                    />
-                  </div>
-                </div>
-
-                {/* 旅游天数 */}
-                <div className="space-y-2">
-                  <Label htmlFor="days" className="text-gray-700 font-medium flex items-center">
-                    <Calendar className="h-4 w-4 mr-2 text-blue-500" />
-                    旅游天数
-                  </Label>
-                  <Input
-                    id="days"
-                    type="number"
-                    min="1"
-                    max="30"
-                    placeholder="3"
-                    value={days}
-                    onChange={(e) => setDays(e.target.value)}
-                    className="border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
-                  />
-                </div>
-
-                {/* 旅行风格 */}
-                <div className="space-y-2">
-                  <Label htmlFor="style" className="text-gray-700 font-medium flex items-center">
-                    <Heart className="h-4 w-4 mr-2 text-blue-500" />
-                    旅行风格
-                  </Label>
-                  <Select value={travelStyle} onValueChange={setTravelStyle}>
-                    <SelectTrigger className="border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl">
-                      <SelectValue placeholder="选择你的旅行风格" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-xl">
-                      {travelStyles.map((style) => (
-                        <SelectItem key={style.value} value={style.value}>
-                          {style.icon} {style.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="flex items-center justify-center mt-3 text-gray-600">
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin text-orange-500" />
+                  <span className="text-sm">AI正在为您量身定制旅行方案...</span>
                 </div>
               </div>
+            )}
 
-              {/* 选中风格的描述 */}
-              {selectedStyleInfo && (
-                <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                  <h4 className="font-medium text-blue-800 mb-2 flex items-center">
-                    <span className="mr-2">{selectedStyleInfo.icon}</span>
-                    {selectedStyleInfo.label}
-                  </h4>
-                  <p className="text-blue-700 text-sm">{selectedStyleInfo.description}</p>
+            {/* 想去的城市 */}
+            <div className="space-y-3">
+              <h2 className="text-xl font-semibold text-gray-800 text-center">想去的城市</h2>
+              <div className="bg-white rounded-2xl p-5 shadow-lg">
+                <Select value={selectedCity} onValueChange={setSelectedCity}>
+                  <SelectTrigger className="w-full h-12 text-base border-2 border-orange-200 focus:border-orange-400 rounded-xl bg-orange-50">
+                    <SelectValue placeholder="上海" className="text-gray-600" />
+                  </SelectTrigger>
+                  <SelectContent className="rounded-xl">
+                    {popularCities.map((city) => (
+                      <SelectItem key={city} value={city} className="text-base py-2">
+                        {city}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* 旅游天数 */}
+            <div className="space-y-3">
+              <h2 className="text-xl font-semibold text-gray-800 text-center">旅游天数</h2>
+              <div className="grid grid-cols-3 gap-3">
+                {dayOptions.map((day) => (
+                  <button
+                    key={day}
+                    onClick={() => setDays(day.toString())}
+                    className={`h-16 rounded-xl border-2 transition-all duration-200 ${
+                      days === day.toString()
+                        ? 'bg-red-500 border-red-500 text-white shadow-lg'
+                        : 'bg-white border-orange-200 text-gray-600 hover:border-orange-300 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="text-xl font-bold">{day}</div>
+                    <div className="text-xs opacity-80">天</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 旅行风格 */}
+            <div className="space-y-3">
+              <h2 className="text-xl font-semibold text-gray-800 text-center">旅行风格</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {travelStyles.map((style) => (
+                  <button
+                    key={style.value}
+                    onClick={() => setTravelStyle(style.value)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
+                      travelStyle === style.value
+                        ? 'bg-red-50 border-red-500 shadow-lg'
+                        : 'bg-white border-orange-200 hover:border-orange-300 hover:shadow-md'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="text-2xl">{style.icon}</div>
+                      <div className="text-lg font-semibold text-gray-800">{style.label}</div>
+                    </div>
+                    <div className="text-sm text-gray-600">{style.description}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* 旅行预算 */}
+            <div className="space-y-3">
+              <h2 className="text-xl font-semibold text-gray-800 text-center">旅行预算</h2>
+              <div className="bg-white rounded-2xl p-5 shadow-lg">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-2xl font-bold text-red-500">¥{budget}</div>
+                  <div className="flex items-center gap-2 text-orange-600">
+                    <Heart className="h-4 w-4 fill-current" />
+                    <span className="text-sm font-medium">舒适型</span>
+                  </div>
                 </div>
-              )}
-
-              {error && (
-                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">
-                  {error}
+                <div className="relative">
+                  <input
+                    type="range"
+                    min="200"
+                    max="3000"
+                    step="100"
+                    value={budget}
+                    onChange={(e) => setBudget(Number(e.target.value))}
+                    className="w-full h-2 bg-gradient-to-r from-red-400 to-cyan-400 rounded-full appearance-none cursor-pointer slider"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1">
+                    <span>¥200</span>
+                    <span>¥3000</span>
+                  </div>
                 </div>
-              )}
+                <div className="mt-4">
+                  <label className="text-sm text-gray-700 font-medium">精确预算：</label>
+                  <div className="flex items-center gap-2 mt-1">
+                    <input
+                      type="number"
+                      value={budget}
+                      onChange={(e) => setBudget(Number(e.target.value))}
+                      className="w-24 px-3 py-1 text-sm border-2 border-orange-200 rounded-lg focus:border-orange-400 outline-none"
+                    />
+                    <span className="text-sm text-gray-600">元</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-              <Button
+            {error && (
+              <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl text-center text-sm">
+                {error}
+              </div>
+            )}
+
+            {/* 生成按钮 */}
+            <div className="text-center pt-2">
+              <button
                 onClick={handleGenerateGuide}
                 disabled={isGenerating || !selectedCity || !budget || !days || !travelStyle}
-                className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-medium py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full max-w-md px-8 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isGenerating ? (
                   <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin inline" />
                     正在生成个性化攻略...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="mr-2 h-5 w-5" />
                     生成专属穷游攻略
                   </>
                 )}
-              </Button>
-            </CardContent>
-          </Card>
+              </button>
+            </div>
+          </div>
         </div>
       </main>
 
       {/* Generated Guide */}
       {guide && (
-        <section className="container mx-auto px-6 py-6 relative z-10">
+        <section className="container mx-auto px-6 py-3 relative z-10">
           <div className="max-w-4xl mx-auto">
             <TravelGuideComponent
               city={guide.city}
@@ -345,17 +335,17 @@ export default function HomePage() {
       )}
 
       {/* 海浪动态背景 - 底部 */}
-      <div className="fixed bottom-0 left-0 w-full h-1/3 opacity-40 pointer-events-none z-0">
+      <div className="fixed bottom-0 left-0 w-full h-1/3 opacity-30 pointer-events-none z-0">
         <div className="wave-container">
           <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
             <defs>
               <path id="gentle-wave" d="m-160,44c30,0 58,-18 88,-18s 58,18 88,18 58,-18 88,-18 58,18 88,18 v44h-352z" />
             </defs>
             <g className="parallax">
-              <use href="#gentle-wave" x="48" y="0" fill="rgba(59, 130, 246, 0.7)" />
-              <use href="#gentle-wave" x="48" y="3" fill="rgba(96, 165, 250, 0.5)" />
-              <use href="#gentle-wave" x="48" y="5" fill="rgba(147, 197, 253, 0.3)" />
-              <use href="#gentle-wave" x="48" y="7" fill="rgba(186, 230, 253, 0.1)" />
+              <use href="#gentle-wave" x="48" y="0" fill="rgba(251, 146, 60, 0.7)" />
+              <use href="#gentle-wave" x="48" y="3" fill="rgba(252, 176, 64, 0.5)" />
+              <use href="#gentle-wave" x="48" y="5" fill="rgba(253, 186, 116, 0.3)" />
+              <use href="#gentle-wave" x="48" y="7" fill="rgba(254, 215, 170, 0.1)" />
             </g>
           </svg>
         </div>
@@ -411,6 +401,27 @@ export default function HomePage() {
           100% { 
             transform: translate3d(85px,0,0);
           }
+        }
+
+        .slider::-webkit-slider-thumb {
+          appearance: none;
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          background: white;
+          border: 3px solid #ef4444;
+          cursor: pointer;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .slider::-moz-range-thumb {
+          height: 24px;
+          width: 24px;
+          border-radius: 50%;
+          background: white;
+          border: 3px solid #ef4444;
+          cursor: pointer;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 768px) {

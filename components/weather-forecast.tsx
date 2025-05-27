@@ -136,15 +136,15 @@ export default function WeatherForecast({ city }: WeatherForecastProps) {
   if (loading) {
     return (
       <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm rounded-2xl">
-        <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-t-2xl">
-          <CardTitle className="flex items-center space-x-2 text-blue-800">
+        <CardHeader className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-t-2xl">
+          <CardTitle className="flex items-center space-x-2 text-orange-800">
             <Cloud className="h-6 w-6" />
             <span>天气预报</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="p-6">
           <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
             <span className="ml-2 text-gray-600">正在获取天气信息...</span>
           </div>
         </CardContent>
@@ -177,8 +177,8 @@ export default function WeatherForecast({ city }: WeatherForecastProps) {
 
   return (
     <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm rounded-2xl">
-      <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-t-2xl">
-        <CardTitle className="flex items-center space-x-2 text-blue-800">
+      <CardHeader className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-t-2xl">
+        <CardTitle className="flex items-center space-x-2 text-orange-800">
           <Cloud className="h-6 w-6" />
           <span>{weatherData.city} 5天天气预报</span>
         </CardTitle>
@@ -189,8 +189,8 @@ export default function WeatherForecast({ city }: WeatherForecastProps) {
           {weatherData.forecast.map((day, index) => (
             <div
               key={index}
-              className={`bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-3 text-center border ${
-                index === 0 ? 'border-blue-300 bg-blue-100' : 'border-cyan-200'
+              className={`bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-3 text-center border ${
+                index === 0 ? 'border-orange-300 bg-orange-100' : 'border-amber-200'
               }`}
             >
               <div className="text-xs font-medium text-stone-600 mb-1">
@@ -225,14 +225,14 @@ export default function WeatherForecast({ city }: WeatherForecastProps) {
         </div>
 
         {/* 穿衣建议 */}
-        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-4 border border-blue-200">
-          <h4 className="font-medium text-blue-800 mb-3 flex items-center">
+        <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-2xl p-4 border border-orange-200">
+          <h4 className="font-medium text-orange-800 mb-3 flex items-center">
             <span className="mr-2">👔</span>
             穿衣建议
           </h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {clothingAdvice.map((advice, index) => (
-              <div key={index} className="flex items-center text-sm text-blue-700">
+              <div key={index} className="flex items-center text-sm text-orange-700">
                 <span className="mr-2">•</span>
                 {advice}
               </div>
