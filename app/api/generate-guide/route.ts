@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       headers: {
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://budget-travel-app.vercel.app",
+        "HTTP-Referer": "https://qiongyou-travel-guide.vercel.app",
         "X-Title": "Budget Travel Guide Generator",
       },
       body: JSON.stringify({
