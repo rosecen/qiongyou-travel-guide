@@ -157,7 +157,7 @@ export default function HomePage() {
               <div className="text-3xl">✈️</div>
             </div>
             <p className="text-lg text-gray-600 font-light">
-              预算低但体验丰富的年轻旅行者专属攻略生成器
+              用最低预算，看最美世界
             </p>
           </div>
 
