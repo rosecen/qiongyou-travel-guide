@@ -93,6 +93,11 @@ export default function HomePage() {
       return
     }
 
+    if (Number.parseInt(budget) < 100) {
+      setError("预算至少需要100元")
+      return
+    }
+
     setIsGenerating(true)
     setError("")
     setProgress(0)
@@ -119,11 +124,13 @@ export default function HomePage() {
         }),
       })
 
-      if (!response.ok) {
-        throw new Error("生成攻略失败")
+      const data = await response.json()
+
+      // 检查新的响应格式
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "生成攻略失败")
       }
 
-      const data = await response.json()
       setProgress(100)
       
       setTimeout(() => {
@@ -146,9 +153,9 @@ export default function HomePage() {
         clearInterval(progressInterval)
         setProgress(0)
       }, 500)
-    } catch (err) {
-      setError("生成攻略时出现错误，请重试")
-      console.error(err)
+    } catch (err: any) {
+      setError(err.message || "生成攻略时出现错误，请重试")
+      console.error("Guide generation error:", err)
       clearInterval(progressInterval)
       setProgress(0)
     } finally {
