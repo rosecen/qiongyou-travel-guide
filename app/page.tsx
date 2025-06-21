@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { MapPin, Wallet, Sparkles, Loader2, Calendar, Palette, DollarSign, Clock, Heart } from "lucide-react"
+import { MapPin, Wallet, Sparkles, Loader2, Calendar, Palette, DollarSign, Clock, Heart, Star, Crown, Zap } from "lucide-react"
 import TravelGuideComponent from "@/components/travel-guide"
 
 const popularCities = [
@@ -146,56 +146,130 @@ export default function HomePage() {
   const selectedStyleInfo = travelStyles.find((style) => style.value === travelStyle)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
-      {/* Main Content */}
-      <main className="container mx-auto px-6 py-8 relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-600 via-orange-500 to-red-500 bg-clip-text text-transparent tracking-tight">穷游去哪玩</h1>
-              <div className="text-3xl">✈️</div>
-            </div>
-            <p className="text-lg text-gray-600 font-light">
-              用最低预算，看最美世界
-            </p>
-          </div>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* 世界级奢华背景 */}
+      <div className="absolute inset-0">
+        {/* 主背景渐变 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+        
+        {/* 动态光效层 */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-gradient-to-r from-amber-500/25 to-orange-500/25 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        </div>
+        
+        {/* 星空效果 */}
+        <div className="absolute inset-0">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 3}s`,
+                animationDuration: `${2 + Math.random() * 2}s`
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* 网格纹理 */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="w-full h-full" style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px'
+          }}></div>
+        </div>
+      </div>
 
-          {/* Planning Form */}
-          <div className="space-y-6">
-            {/* 进度条 */}
-            {isGenerating && (
-              <div className="bg-white rounded-2xl p-6 shadow-lg">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-base font-medium text-gray-700">正在生成您的专属攻略...</span>
-                  <span className="text-base text-orange-600 font-semibold">{Math.round(progress)}%</span>
-                </div>
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                  <div 
-                    className="h-full bg-gradient-to-r from-orange-400 to-amber-400 rounded-full transition-all duration-300 ease-out relative"
-                    style={{ width: `${progress}%` }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+      {/* Main Content */}
+      <main className="container mx-auto px-6 py-16 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          {/* 世界级Hero Section */}
+          <div className="text-center mb-24 animate-in fade-in duration-1000">
+            <div className="mb-12">
+              {/* 皇冠图标 */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <Crown className="h-16 w-16 text-yellow-400 animate-pulse" />
+                  <div className="absolute -top-2 -right-2">
+                    <Sparkles className="h-6 w-6 text-yellow-300 animate-spin" />
                   </div>
                 </div>
-                <div className="flex items-center justify-center mt-3 text-gray-600">
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin text-orange-500" />
-                  <span className="text-sm">AI正在为您量身定制旅行方案...</span>
+              </div>
+              
+              <h1 className="text-8xl font-black tracking-tight mb-6 leading-none">
+                <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent animate-pulse">
+                  穷游去哪玩
+                </span>
+              </h1>
+              
+              {/* 世界第一标识 */}
+              <div className="flex justify-center mb-6">
+                <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-6 py-2 rounded-full font-bold text-lg animate-bounce">
+                  🏆 WORLD'S #1 TRAVEL PLANNER 🏆
+                </div>
+              </div>
+              
+              <div className="w-32 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 mx-auto mb-8 animate-pulse"></div>
+              
+              <p className="text-3xl font-light text-white/90 tracking-wide mb-4">
+                用最低预算，看最美世界
+              </p>
+              
+              <p className="text-xl text-purple-200 font-light">
+                ✨ 世界级AI驱动 · 奢华体验设计 · 无与伦比的智能推荐 ✨
+              </p>
+            </div>
+          </div>
+
+          {/* 世界级Planning Form */}
+          <div className="space-y-16">
+            {/* 进度条 */}
+            {isGenerating && (
+              <div className="bg-black/40 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl border border-purple-500/30 animate-in slide-in-from-top duration-500">
+                <div className="flex items-center justify-between mb-8">
+                  <span className="text-2xl font-medium text-white flex items-center">
+                    <Zap className="mr-3 h-8 w-8 text-yellow-400 animate-pulse" />
+                    正在生成您的专属奢华攻略
+                  </span>
+                  <span className="text-2xl text-yellow-400 font-bold">{Math.round(progress)}%</span>
+                </div>
+                <div className="w-full bg-slate-800 rounded-full h-4 overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-full transition-all duration-500 ease-out relative"
+                    style={{ width: `${progress}%` }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center mt-8 text-white/80">
+                  <Loader2 className="mr-4 h-8 w-8 animate-spin text-yellow-400" />
+                  <span className="font-light text-xl">世界级AI正在为您量身定制奢华旅行方案</span>
                 </div>
               </div>
             )}
 
             {/* 想去的城市 */}
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold text-gray-800 text-center">想去的城市</h2>
-              <div className="bg-white rounded-2xl p-5 shadow-lg">
+            <div className="space-y-8 animate-in slide-in-from-left duration-700 delay-200">
+              <h2 className="text-5xl font-bold text-center tracking-wide">
+                <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  想去的城市
+                </span>
+              </h2>
+              <div className="bg-black/30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl border border-cyan-500/30 hover:border-cyan-400/50 transition-all duration-500 hover:shadow-cyan-500/20">
                 <Select value={selectedCity} onValueChange={setSelectedCity}>
-                  <SelectTrigger className="w-full h-12 text-base border-2 border-orange-200 focus:border-orange-400 rounded-xl bg-orange-50">
-                    <SelectValue placeholder="上海" className="text-gray-600" />
+                  <SelectTrigger className="w-full h-20 text-2xl border-0 bg-slate-800/50 focus:bg-slate-700/50 rounded-2xl transition-all duration-300 hover:bg-slate-700/50 text-white">
+                    <SelectValue placeholder="🌍 选择您的梦想目的地" className="text-white/80 font-light" />
                   </SelectTrigger>
-                  <SelectContent className="rounded-xl">
+                  <SelectContent className="rounded-2xl border-0 shadow-2xl bg-slate-800/95 backdrop-blur-xl">
                     {popularCities.map((city) => (
-                      <SelectItem key={city} value={city} className="text-base py-2">
+                      <SelectItem key={city} value={city} className="text-xl py-4 font-light hover:bg-slate-700/50 rounded-xl text-white">
                         {city}
                       </SelectItem>
                     ))}
@@ -205,229 +279,236 @@ export default function HomePage() {
             </div>
 
             {/* 旅游天数 */}
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold text-gray-800 text-center">旅游天数</h2>
-              <div className="grid grid-cols-3 gap-3">
-                {dayOptions.map((day) => (
-                  <button
-                    key={day}
-                    onClick={() => setDays(day.toString())}
-                    className={`h-16 rounded-xl border-2 transition-all duration-200 ${
-                      days === day.toString()
-                        ? 'bg-red-500 border-red-500 text-white shadow-lg'
-                        : 'bg-white border-orange-200 text-gray-600 hover:border-orange-300 hover:shadow-md'
-                    }`}
-                  >
-                    <div className="text-xl font-bold">{day}</div>
-                    <div className="text-xs opacity-80">天</div>
-                  </button>
-                ))}
+            <div className="space-y-8 animate-in slide-in-from-right duration-700 delay-300">
+              <h2 className="text-5xl font-bold text-center tracking-wide">
+                <span className="bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
+                  旅游天数
+                </span>
+              </h2>
+              <div className="bg-black/30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl border border-emerald-500/30">
+                <div className="grid grid-cols-3 gap-6">
+                  {dayOptions.map((day) => (
+                    <button
+                      key={day}
+                      onClick={() => setDays(day.toString())}
+                      className={`h-20 rounded-2xl font-bold text-xl transition-all duration-300 transform hover:scale-110 ${
+                        days === day.toString()
+                          ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-2xl shadow-emerald-500/50"
+                          : "bg-slate-800/50 text-white/80 hover:bg-slate-700/50 hover:shadow-xl border border-emerald-500/20"
+                      }`}
+                    >
+                      {day} 天
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
             {/* 旅行风格 */}
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold text-gray-800 text-center">旅行风格</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {travelStyles.map((style) => (
-                  <button
-                    key={style.value}
-                    onClick={() => setTravelStyle(style.value)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
-                      travelStyle === style.value
-                        ? 'bg-red-50 border-red-500 shadow-lg'
-                        : 'bg-white border-orange-200 hover:border-orange-300 hover:shadow-md'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="text-2xl">{style.icon}</div>
-                      <div className="text-lg font-semibold text-gray-800">{style.label}</div>
-                    </div>
-                    <div className="text-sm text-gray-600">{style.description}</div>
-                  </button>
-                ))}
+            <div className="space-y-8 animate-in slide-in-from-left duration-700 delay-400">
+              <h2 className="text-5xl font-bold text-center tracking-wide">
+                <span className="bg-gradient-to-r from-pink-400 to-rose-500 bg-clip-text text-transparent">
+                  旅行风格
+                </span>
+              </h2>
+              <div className="bg-black/30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl border border-pink-500/30">
+                <div className="grid grid-cols-2 gap-8">
+                  {travelStyles.map((style) => (
+                    <button
+                      key={style.value}
+                      onClick={() => setTravelStyle(style.value)}
+                      className={`p-8 rounded-2xl text-left transition-all duration-300 transform hover:scale-105 ${
+                        travelStyle === style.value
+                          ? "bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-2xl shadow-pink-500/50"
+                          : "bg-slate-800/50 text-white/80 hover:bg-slate-700/50 hover:shadow-xl border border-pink-500/20"
+                      }`}
+                    >
+                      <div className="text-4xl mb-4">{style.icon}</div>
+                      <h3 className="font-bold text-2xl mb-3">{style.label}</h3>
+                      <p className={`text-lg font-light ${
+                        travelStyle === style.value ? "text-white/90" : "text-white/60"
+                      }`}>
+                        {style.description}
+                      </p>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* 旅行预算 */}
-            <div className="space-y-3">
-              <h2 className="text-xl font-semibold text-gray-800 text-center">旅行预算</h2>
-              <div className="bg-white rounded-2xl p-5 shadow-lg">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-2xl font-bold text-red-500">¥{budget}</div>
-                  <div className="flex items-center gap-2 text-orange-600">
-                    <Heart className="h-4 w-4 fill-current" />
-                    <span className="text-sm font-medium">舒适型</span>
+            {/* 预算设置 */}
+            <div className="space-y-8 animate-in slide-in-from-right duration-700 delay-500">
+              <h2 className="text-5xl font-bold text-center tracking-wide">
+                <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                  预算设置
+                </span>
+              </h2>
+              <div className="bg-black/30 backdrop-blur-2xl rounded-3xl p-10 shadow-2xl border border-amber-500/30">
+                <div className="space-y-8">
+                  <div className="text-center">
+                    <div className="text-6xl font-black text-white mb-4">
+                      <span className="bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent">
+                        ¥{budget.toLocaleString()}
+                      </span>
+                    </div>
+                    <p className="text-white/60 font-light text-xl">预计总预算</p>
                   </div>
-                </div>
-                <div className="relative">
-                  <input
-                    type="range"
-                    min="200"
-                    max="3000"
-                    step="100"
-                    value={budget}
-                    onChange={(e) => setBudget(Number(e.target.value))}
-                    className="w-full h-2 bg-gradient-to-r from-red-400 to-cyan-400 rounded-full appearance-none cursor-pointer slider"
-                  />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>¥200</span>
-                    <span>¥3000</span>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <label className="text-sm text-gray-700 font-medium">精确预算：</label>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="relative">
                     <input
-                      type="number"
+                      type="range"
+                      min="100"
+                      max="10000"
+                      step="100"
                       value={budget}
                       onChange={(e) => setBudget(Number(e.target.value))}
-                      className="w-24 px-3 py-1 text-sm border-2 border-orange-200 rounded-lg focus:border-orange-400 outline-none"
+                      className="w-full h-4 bg-gradient-to-r from-amber-200 to-orange-200 rounded-full appearance-none cursor-pointer luxury-slider"
+                      style={{
+                        background: `linear-gradient(to right, #f59e0b 0%, #ea580c ${((budget - 100) / (10000 - 100)) * 100}%, #374151 ${((budget - 100) / (10000 - 100)) * 100}%, #374151 100%)`
+                      }}
                     />
-                    <span className="text-sm text-gray-600">元</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            {error && (
-              <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-xl text-center text-sm">
-                {error}
-              </div>
-            )}
-
             {/* 生成按钮 */}
-            <div className="text-center pt-2">
+            <div className="text-center pt-12 animate-in slide-in-from-bottom duration-700 delay-600">
               <button
                 onClick={handleGenerateGuide}
                 disabled={isGenerating || !selectedCity || !budget || !days || !travelStyle}
-                className="w-full max-w-md px-8 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative px-16 py-6 bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 text-white text-2xl font-bold rounded-full shadow-2xl hover:shadow-purple-500/50 transform hover:scale-110 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none overflow-hidden"
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin inline" />
-                    正在生成个性化攻略...
-                  </>
-                ) : (
-                  <>
-                    生成专属穷游攻略
-                  </>
-                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative flex items-center justify-center">
+                  <Crown className="mr-4 h-8 w-8" />
+                  {isGenerating ? "生成中..." : "🚀 生成世界级穷游攻略 🚀"}
+                  <Sparkles className="ml-4 h-8 w-8 animate-spin" />
+                </div>
               </button>
             </div>
+
+            {/* 错误提示 */}
+            {error && (
+              <div className="bg-red-900/40 backdrop-blur-xl border border-red-500/50 text-red-200 px-8 py-6 rounded-2xl text-center font-light text-xl animate-in slide-in-from-top duration-300">
+                ⚠️ {error}
+              </div>
+            )}
           </div>
         </div>
       </main>
 
-      {/* Generated Guide */}
+      {/* 生成结果 */}
       {guide && (
-        <section className="container mx-auto px-6 py-3 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <TravelGuideComponent
-              city={guide.city}
-              budget={guide.budget}
-              days={guide.days}
-              style={guide.style}
-              data={guide.data}
-            />
-          </div>
-        </section>
+        <div className="py-8 animate-in slide-in-from-bottom duration-1000">
+          <TravelGuideComponent 
+            city={guide.city}
+            budget={guide.budget}
+            days={guide.days}
+            style={guide.style}
+            data={guide.data}
+          />
+        </div>
       )}
 
-      {/* 海浪动态背景 - 底部 */}
-      <div className="fixed bottom-0 left-0 w-full h-1/3 opacity-30 pointer-events-none z-0">
-        <div className="wave-container">
-          <svg className="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
-            <defs>
-              <path id="gentle-wave" d="m-160,44c30,0 58,-18 88,-18s 58,18 88,18 58,-18 88,-18 58,18 88,18 v44h-352z" />
-            </defs>
-            <g className="parallax">
-              <use href="#gentle-wave" x="48" y="0" fill="rgba(251, 146, 60, 0.7)" />
-              <use href="#gentle-wave" x="48" y="3" fill="rgba(252, 176, 64, 0.5)" />
-              <use href="#gentle-wave" x="48" y="5" fill="rgba(253, 186, 116, 0.3)" />
-              <use href="#gentle-wave" x="48" y="7" fill="rgba(254, 215, 170, 0.1)" />
-            </g>
-          </svg>
-        </div>
+      {/* 世界级底部装饰 */}
+      <div className="absolute bottom-0 left-0 w-full h-1/3 overflow-hidden pointer-events-none">
+        <svg
+          className="absolute bottom-0 w-full h-full"
+          viewBox="0 0 1200 320"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="luxury-wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.3" />
+              <stop offset="25%" stopColor="#ec4899" stopOpacity="0.3" />
+              <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.3" />
+              <stop offset="75%" stopColor="#10b981" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#luxury-wave-gradient)"
+            d="M0,160L48,176C96,192,192,224,288,213.3C384,203,480,149,576,149.3C672,149,768,203,864,213.3C960,224,1056,192,1152,176L1200,160L1200,320L1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+            className="animate-pulse"
+          />
+        </svg>
       </div>
 
       <style jsx>{`
-        .wave-container {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-        }
-
-        .waves {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 200%;
-          height: 100%;
-          min-height: 200px;
-        }
-
-        .parallax > use {
-          animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
-        }
-
-        .parallax > use:nth-child(1) {
-          animation-delay: -2s;
-          animation-duration: 7s;
-        }
-
-        .parallax > use:nth-child(2) {
-          animation-delay: -3s;
-          animation-duration: 10s;
-        }
-
-        .parallax > use:nth-child(3) {
-          animation-delay: -4s;
-          animation-duration: 13s;
-        }
-
-        .parallax > use:nth-child(4) {
-          animation-delay: -5s;
-          animation-duration: 20s;
-        }
-
-        @keyframes move-forever {
-          0% {
-            transform: translate3d(-90px,0,0);
-          }
-          100% { 
-            transform: translate3d(85px,0,0);
-          }
-        }
-
-        .slider::-webkit-slider-thumb {
+        .luxury-slider::-webkit-slider-thumb {
           appearance: none;
-          height: 24px;
-          width: 24px;
+          height: 32px;
+          width: 32px;
           border-radius: 50%;
-          background: white;
-          border: 3px solid #ef4444;
+          background: linear-gradient(135deg, #f59e0b, #ea580c);
           cursor: pointer;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          box-shadow: 0 8px 24px rgba(245, 158, 11, 0.6);
+          transition: all 0.3s ease;
+          border: 3px solid #fff;
         }
-
-        .slider::-moz-range-thumb {
-          height: 24px;
-          width: 24px;
+        
+        .luxury-slider::-webkit-slider-thumb:hover {
+          transform: scale(1.3);
+          box-shadow: 0 12px 32px rgba(245, 158, 11, 0.8);
+        }
+        
+        .luxury-slider::-moz-range-thumb {
+          height: 32px;
+          width: 32px;
           border-radius: 50%;
-          background: white;
-          border: 3px solid #ef4444;
+          background: linear-gradient(135deg, #f59e0b, #ea580c);
           cursor: pointer;
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          border: 3px solid #fff;
+          box-shadow: 0 8px 24px rgba(245, 158, 11, 0.6);
         }
-
-        @media (max-width: 768px) {
-          .waves {
-            min-height: 150px;
-          }
+        
+        @keyframes fade-in {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slide-in-from-left {
+          from { opacity: 0; transform: translateX(-80px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slide-in-from-right {
+          from { opacity: 0; transform: translateX(80px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slide-in-from-top {
+          from { opacity: 0; transform: translateY(-50px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slide-in-from-bottom {
+          from { opacity: 0; transform: translateY(50px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-in {
+          animation-fill-mode: both;
+        }
+        
+        .fade-in {
+          animation-name: fade-in;
+        }
+        
+        .slide-in-from-left {
+          animation-name: slide-in-from-left;
+        }
+        
+        .slide-in-from-right {
+          animation-name: slide-in-from-right;
+        }
+        
+        .slide-in-from-top {
+          animation-name: slide-in-from-top;
+        }
+        
+        .slide-in-from-bottom {
+          animation-name: slide-in-from-bottom;
         }
       `}</style>
     </div>

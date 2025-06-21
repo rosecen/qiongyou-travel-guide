@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { StagewiseDevToolbar } from '@/components/stagewise-toolbar'
 
 export const metadata: Metadata = {
-  title: '穷游去哪玩儿 - 用最低预算，看最美世界',
-  description: '让AI为你定制专属的穷游攻略，用最少的钱体验最丰富的旅程',
-  generator: '穷游去哪玩儿',
+  title: '穷游去哪玩儿 - 世界第一的旅游攻略生成器',
+  description: '世界级AI为你定制专属的穷游攻略，用最少的钱体验最丰富的旅程',
+  generator: '穷游去哪玩儿 - 世界第一',
 }
 
 export default function RootLayout({
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <StagewiseDevToolbar />
+      </body>
     </html>
   )
 }
